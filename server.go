@@ -9,6 +9,7 @@ import (
 
 	libhttp "github.com/CyberAgent/car-golib/http"
 	"github.com/CyberAgent/car-golib/log"
+	"github.com/Jun-Chang/rpc-server/codec"
 	"github.com/Jun-Chang/rpc-server/proto"
 	"github.com/Jun-Chang/rpc-server/service"
 	"github.com/julienschmidt/httprouter"
@@ -59,7 +60,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		server := grpc.NewServer()
+		server := grpc.NewServer(grpc.CustomCodec(codec.CodecJson{}))
 
 		proto.RegisterTestServiceServer(server, new(grpcService))
 		server.Serve(grpcL)
